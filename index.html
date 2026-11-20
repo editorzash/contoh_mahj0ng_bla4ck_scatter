@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Mahjong Wins 3 - Black Scatter</title>
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="src/styles.css" />
+</head>
+<body>
+  <div id="viewport">
+    <!-- 16:9 Scaled Stage (1778 x 1000 logical resolution matching Pragmatic Play UHT Desktop scene) -->
+    <div id="stage">
+
+      <!-- ==================== 1. PRAGMATIC PLAY LOADING SCREEN ==================== -->
+      <div id="loading-screen" class="screen active">
+        <div class="pp-loader-center">
+          <div class="pp-logo-wrap">
+            <span class="pp-wordmark">PRAGMATIC</span>
+            <div class="pp-circle-logo">
+              <svg class="pp-crown-svg" viewBox="0 0 130 145" width="108" height="120">
+                <path d="M46 28 L38 6 L55 20 L65 2 L71 23 L84 13 L74 31 Z" fill="#f5821f" />
+                <circle cx="66" cy="82" r="48" fill="none" stroke="#f5821f" stroke-width="5.5" />
+                <ellipse cx="82" cy="54" rx="11" ry="6.5" transform="rotate(25 82 54)" fill="#f5821f" />
+                <text x="66" y="92" text-anchor="middle" fill="#ffffff" font-family="'f1db1db205ce2a00499287d83ff8b28', Arial, sans-serif" font-weight="700" font-size="27" letter-spacing="1">PLAY</text>
+              </svg>
+            </div>
+          </div>
+          <div class="pp-progress-track">
+            <div id="loading-bar-fill" class="pp-progress-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== 2. INTRO SPLASH SCREEN (STEP 14) ==================== -->
+      <div id="intro-screen" class="screen">
+        <div class="intro-bg-layer">
+          <img src="assets/sprites/Background_Intro_Land/s_background_intro_land.png" alt="Intro Background" class="intro-bg-img" />
+          <div id="intro-particles" class="ambient-particles"></div>
+        </div>
+
+        <!-- Top-Right Game Title Logo -->
+        <div class="intro-title-wrap">
+          <img src="assets/sprites/Title/s_Title.png" alt="Mahjong Wins 3 - Black Scatter" class="intro-title-img" />
+        </div>
+
+        <!-- Right-Side Play Button, Volatility & Don't Show Next Time -->
+        <div class="intro-controls-right">
+          <button id="intro-play-btn" class="intro-play-btn" title="Continue to Game">
+            <img src="assets/sprites/GUI_v11_desktop/s_ananas.png" alt="" class="spin-crown-accent" />
+            <img src="assets/sprites/IntroScreenPlayButton/s_Spin_Normal.png" alt="" class="intro-spin-ring" />
+            <img src="assets/sprites/IntroScreenPlayButton/s_Spin_Start_Icon.png" alt="Play" class="intro-spin-arrows" />
+          </button>
+
+          <div class="intro-volatility-badge">
+            <img src="assets/sprites/volatility/s_volatility_box.png" alt="" class="vol-box-bg" />
+            <div class="vol-content">
+              <img src="assets/sprites/volatility_indicator_Material/s_icon_lowvolatility.png" alt="" class="vol-icon" />
+              <span class="vol-text">LOW VOLATILITY</span>
+            </div>
+          </div>
+
+          <label class="intro-skip-checkbox" id="intro-skip-toggle">
+            <span class="checkbox-box">
+              <img src="assets/sprites/GUI_v11/s_checkbox_1.png" alt="" class="cb-frame" />
+              <img id="intro-cb-check" src="assets/sprites/GUI_v11/s_checkbox_icon.png" alt="" class="cb-tick hidden" />
+            </span>
+            <span class="skip-label-text">DON'T SHOW NEXT TIME</span>
+          </label>
+        </div>
+
+        <!-- Bottom Dragon Headline Banner -->
+        <div class="intro-bottom-headline">
+          <span class="intro-hl-gold">WIN UP TO</span>
+          <span class="intro-hl-green" data-text="100,000X">100,000X</span>
+          <span class="intro-hl-gold">IN COMBINATIONS WITH UP TO 4</span>
+          <img src="assets/sprites/S12/s_S12.png" alt="Black Scatter" class="intro-hl-scatter" />
+        </div>
+      </div>
+
+      <!-- ==================== 3. MAIN GAME SCREEN (STEP 16) ==================== -->
+      <div id="game-screen" class="screen">
+        <!-- Sky & Gold Coins Background -->
+        <div class="game-bg-layer">
+          <img id="game-bg-base" src="assets/sprites/Basegame/s_background_base_land.png" alt="" class="game-bg-img active" />
+          <img id="game-bg-free" src="assets/sprites/Freegame/s_background_free_land.png" alt="" class="game-bg-img" />
+          <div id="bg-clouds-layer" class="bg-clouds-layer"></div>
+          <div id="bg-coins-layer" class="bg-coins-layer"></div>
+        </div>
+
+        <!-- Left Side Panel: Free Spins Counter & Quick Feature Triggers -->
+        <div class="left-side-column">
+          <!-- Free Spins Left Panel (Visible during Free Spins) -->
+          <div id="fs-counter-panel" class="fs-counter-panel hidden">
+            <img src="assets/sprites/BuyButton/s_FSLeftPanel.png" alt="" class="fs-panel-bg" />
+            <div class="fs-panel-content">
+              <div class="fs-label-top">FREE SPINS</div>
+              <div id="fs-remaining-count" class="fs-count-num">10</div>
+              <div class="fs-label-sub">REMAINING</div>
+            </div>
+          </div>
+
+          <!-- Buy Free Spins Button (Base Game) -->
+          <button id="buy-fs-btn" class="buy-fs-panel-btn" title="Buy Free Spins (100x Bet)">
+            <img src="assets/sprites/BuyButton/s_BuyButtonPanel.png" alt="" class="buy-panel-bg" />
+            <div class="buy-panel-content">
+              <span class="buy-title">BUY</span>
+              <span class="buy-sub">FREE SPINS</span>
+              <span id="buy-price-label" class="buy-price">$200.00</span>
+            </div>
+          </button>
+
+          <!-- Demo / Test Feature Bar -->
+          <div class="demo-feature-bar">
+            <div class="demo-bar-title">TEST FEATURES</div>
+            <button class="demo-chip" data-force="tumble" title="Force Multi-Tumble + Gold to Wild">Gold + Tumble</button>
+            <button class="demo-chip" data-force="freespins" title="Force 3+ Gold Scatters (Free Spins)">Free Spins</button>
+            <button class="demo-chip" data-force="black1" title="Force 1 Black Scatter + 2 Scatters (50x)">1x Black (50x)</button>
+            <button class="demo-chip" data-force="black4" title="Force 4 Black Scatters (100,000x Max Win)">4x Black (100,000x)</button>
+            <button id="open-assets-btn" class="demo-chip accent" title="Browse all 1,806 extracted sprites">1,806 Assets</button>
+          </div>
+        </div>
+
+        <!-- Center Reel Assembly (Exact coordinates from game000..002.json) -->
+        <div id="reel-assembly" class="reel-assembly">
+          <!-- 1. Burgundy/Blue Fretwork Reel Background -->
+          <img id="reel-backdrop-base" src="assets/sprites/ReelBackground/s_reelBackground_basegame.png" alt="" class="reel-backdrop-img active" />
+          <img id="reel-backdrop-free" src="assets/sprites/ReelBackgroundFS/s_reelBackground_freegame.png" alt="" class="reel-backdrop-img" />
+
+          <!-- 2. Clipped 5-Reel Window (4-5-5-5-4 staggered rows with top & bottom tile peek) -->
+          <div id="reels-viewport" class="reels-viewport">
+            <div id="reels-container" class="reels-container"></div>
+            <!-- Reel Anticipation Glow Overlay -->
+            <div id="anticipation-overlay" class="anticipation-overlay hidden">
+              <img id="anticipation-img" src="assets/sprites/anticipation_anticipation/s_mawi3_anticipation_1.png" alt="" />
+            </div>
+            <!-- Symbol Click Mini Paytable Popup -->
+            <div id="symbol-callout" class="symbol-callout hidden">
+              <img src="assets/sprites/Paytable_Popus/s_paytable_popup.png" alt="" class="callout-bg" />
+              <div class="callout-inner">
+                <img id="callout-img" src="assets/sprites/S03/s_S03.png" alt="" class="callout-sym-img" />
+                <div id="callout-text" class="callout-pay-text"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Ornate Twin-Dragon Reel Frame (renders OVER top/bottom peeking tiles) -->
+          <img id="reel-frame-base" src="assets/sprites/ReelFrame/s_reelFrame_basegame_NoPanel.png" alt="" class="reel-frame-img active" />
+          <img id="reel-frame-free" src="assets/sprites/ReelFrameFS/s_reelFrame_freegame_NoPanel.png" alt="" class="reel-frame-img" />
+
+          <!-- 4. Top Tumble Multiplier Bar (x1 x2 x3 x5 in Base Game, x2 x4 x6 x10 in Free Spins) -->
+          <div id="multiplier-bar" class="multiplier-bar">
+            <img id="fs-mult-glow" src="assets/sprites/multiplier_Displayer_Material/s_multiplier_glow_fs.png" alt="" class="fs-mult-glow hidden" />
+            <div class="mult-slot" data-index="0" style="left: 112px; top: 34px;">
+              <img class="mult-img-off" src="assets/sprites/multiplier_Displayer_Material/s_basegame_x1.png" alt="x1" />
+              <img class="mult-img-on active" src="assets/sprites/multiplier_Displayer_Material/s_basegame_x1_gold.png" alt="x1" />
+            </div>
+            <div class="mult-slot" data-index="1" style="left: 222px; top: 30px;">
+              <img class="mult-img-off active" src="assets/sprites/multiplier_Displayer_Material/s_basegame_x2.png" alt="x2" />
+              <img class="mult-img-on" src="assets/sprites/multiplier_Displayer_Material/s_basegame_x2_gold.png" alt="x2" />
+            </div>
+            <div class="mult-slot" data-index="2" style="left: 347px; top: 30px;">
+              <img class="mult-img-off active" src="assets/sprites/multiplier_Displayer_Material/s_basegame_x3.png" alt="x3" />
+              <img class="mult-img-on" src="assets/sprites/multiplier_Displayer_Material/s_basegame_x3_gold.png" alt="x3" />
+            </div>
+            <div class="mult-slot" data-index="3" style="left: 467px; top: 34px;">
+              <img class="mult-img-off active" src="assets/sprites/multiplier_Displayer_Material/s_basegame_x5.png" alt="x5" />
+              <img class="mult-img-on" src="assets/sprites/multiplier_Displayer_Material/s_basegame_x5_gold.png" alt="x5" />
+            </div>
+          </div>
+
+          <!-- 5. Bottom Crimson/Emerald Dragon Message & Win Banner -->
+          <div id="bottom-banner-zone" class="bottom-banner-zone">
+            <div id="banner-idle-msg" class="banner-idle-msg">HOLD SPACE FOR TURBO SPIN</div>
+            <div id="banner-win-box" class="banner-win-box hidden">
+              <div id="banner-tumble-detail" class="banner-tumble-detail"></div>
+              <div class="banner-total-win-row">
+                <span id="banner-win-label" class="banner-win-label">WIN</span>
+                <span id="banner-win-amount" class="banner-win-amount">$0.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right-Side Black Dragon Game Logo (Exact position from game000.json) -->
+        <div class="game-logo-right">
+          <img src="assets/sprites/Title/s_Title.png" alt="Mahjong Wins 3 - Black Scatter" class="game-logo-img" />
+        </div>
+
+        <!-- ==================== 4. PRAGMATIC PLAY BOTTOM HUD BAR ==================== -->
+        <div class="pp-hud-bar">
+          <!-- Bottom-Left: Menu, Sound, Info, Pragmatic Play Watermark, Credit & Bet -->
+          <div class="hud-left">
+            <div class="hud-mini-stack">
+              <button id="btn-menu" class="hud-icon-btn small" title="System Settings">
+                <img src="assets/sprites/GUI/s_Menu.png" alt="Menu" />
+              </button>
+              <button id="btn-sound" class="hud-icon-btn small" title="Toggle Sound">
+                <img id="sound-icon-img" src="assets/sprites/GUI/s_Sound.png" alt="Sound" />
+              </button>
+            </div>
+
+            <button id="btn-info" class="hud-icon-btn info-btn" title="Paytable & Game Rules">
+              <img src="assets/sprites/GUI/s_Paytable.png" alt="Info" />
+            </button>
+
+            <div class="hud-credit-bet" id="credit-bet-toggle" title="Click to toggle Cash / Coins">
+              <div class="hud-stat-row">
+                <span class="hud-stat-label">CREDIT</span>
+                <span id="hud-credit-val" class="hud-stat-val">$100,000.00</span>
+              </div>
+              <div class="hud-stat-row">
+                <span class="hud-stat-label">BET</span>
+                <span id="hud-bet-val" class="hud-stat-val">$2.00</span>
+              </div>
+            </div>
+
+            <img src="assets/sprites/GUI_v11_desktop/s_PragmaticPlay.png" alt="PRAGMATIC PLAY" class="pp-hud-watermark" />
+          </div>
+
+          <!-- Bottom-Right: Minus, Big Circular Spin Button + Crown, Plus, Autoplay Pill -->
+          <div class="hud-right">
+            <button id="btn-bet-minus" class="hud-icon-btn bet-adj-btn" title="Decrease Bet">
+              <img src="assets/sprites/GUI/s_Decrement.png" alt="-" />
+            </button>
+
+            <div class="spin-cluster">
+              <button id="btn-spin" class="hud-spin-btn" title="Spin (Space / Enter)">
+                <img src="assets/sprites/GUI_v11_desktop/s_ananas.png" alt="" class="hud-spin-crown" />
+                <img id="spin-btn-bg" src="assets/sprites/GUI_v11_desktop/s_spin_normal.png" alt="Spin" class="hud-spin-disc" />
+                <img id="spin-stop-icon" src="assets/sprites/GUI_v11_desktop/s_Spin_Stop_Icon.png" alt="Stop" class="hud-spin-stop hidden" />
+              </button>
+
+              <button id="btn-autoplay" class="hud-autoplay-pill" title="Autoplay">
+                <span class="auto-icon-wrap">
+                  <img src="assets/sprites/GUI_v11/s_autoplay.png" alt="" class="auto-icon-img" />
+                </span>
+                <span id="autoplay-btn-text" class="auto-pill-text">AUTOPLAY</span>
+              </button>
+            </div>
+
+            <button id="btn-bet-plus" class="hud-icon-btn bet-adj-btn" title="Increase Bet">
+              <img src="assets/sprites/GUI/s_Increment.png" alt="+" />
+            </button>
+          </div>
+        </div>
+
+        <!-- ==================== 5. BIG WIN / FREE SPINS / BLACK SCATTER OVERLAY ==================== -->
+        <div id="celebration-overlay" class="celebration-overlay hidden">
+          <div class="celeb-backdrop"></div>
+          <img src="assets/sprites/bigwin_bigwin/s_back_ray.png" alt="" class="celeb-rays-spin" />
+          <div id="celeb-coin-fountain" class="celeb-coin-fountain"></div>
+          <div class="celeb-content">
+            <img id="celeb-tier-img" src="assets/sprites/bigwin_bigwin/s_nice_top.png" alt="BIG WIN" class="celeb-tier-img" />
+            <div id="celeb-title-text" class="celeb-title-text">CONGRATULATIONS!</div>
+            <div id="celeb-subtitle-text" class="celeb-subtitle-text"></div>
+            <div id="celeb-amount-text" class="celeb-amount-text">$0.00</div>
+            <button id="celeb-continue-btn" class="celeb-continue-btn">CLICK TO CONTINUE</button>
+          </div>
+        </div>
+
+        <!-- ==================== 6. PAYTABLE & GAME RULES MODAL (7 PAGES) ==================== -->
+        <div id="paytable-modal" class="modal-overlay hidden">
+          <div class="paytable-window">
+            <div class="pt-header">
+              <span id="pt-page-title" class="pt-header-title">PAYTABLE &amp; GAME RULES</span>
+              <span id="pt-page-indicator" class="pt-page-indicator">PAGE 1 / 7</span>
+            </div>
+            <div id="pt-body" class="pt-body"></div>
+            <div class="pt-footer">
+              <button id="pt-prev-btn" class="pt-nav-btn">
+                <img src="assets/sprites/paytable_common/s_PaytablePageButton_Left_Normal.png" alt="Prev" />
+              </button>
+              <div id="pt-dots" class="pt-dots"></div>
+              <button id="pt-next-btn" class="pt-nav-btn">
+                <img src="assets/sprites/paytable_common/s_PaytablePageButton_Right_Normal.png" alt="Next" />
+              </button>
+              <button id="pt-close-btn" class="pt-nav-btn pt-close-btn">
+                <img src="assets/sprites/paytable_common/s_PaytablePageButton_Close_Normal.png" alt="Close" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== 7. BUY FREE SPINS CONFIRMATION MODAL ==================== -->
+        <div id="buy-modal" class="modal-overlay hidden">
+          <div class="buy-dialog">
+            <img src="assets/sprites/BBB_UI/s_window_bg.png" alt="" class="buy-dialog-bg" />
+            <div class="buy-dialog-content">
+              <div class="buy-dialog-title">BUY FREE SPINS</div>
+              <div class="buy-dialog-desc">Instantly trigger the FREE SPINS round with 3, 4, or 5 SCATTER symbols for 100x current total bet:</div>
+              <div id="buy-dialog-cost" class="buy-dialog-cost">$200.00</div>
+              <div class="buy-dialog-actions">
+                <button id="buy-confirm-yes" class="buy-action-btn yes">
+                  <img src="assets/sprites/BuyFeature_Material/s_yes_button.png" alt="Yes" />
+                </button>
+                <button id="buy-confirm-no" class="buy-action-btn no">
+                  <img src="assets/sprites/BuyFeature_Material/s_x_button.png" alt="No" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== 8. BET & SYSTEM SETTINGS MODAL ==================== -->
+        <div id="settings-modal" class="modal-overlay hidden">
+          <div class="settings-window">
+            <div class="settings-header">
+              <span id="settings-modal-title">BET MULTIPLIER &amp; SETTINGS</span>
+              <button id="settings-close-btn" class="settings-x-btn">&times;</button>
+            </div>
+            <div class="settings-body">
+              <div class="settings-row">
+                <span>TOTAL BET ($0.40 – $200.00)</span>
+                <div class="settings-bet-controls">
+                  <button id="modal-bet-minus" class="s-round-btn">&minus;</button>
+                  <span id="modal-bet-display" class="s-bet-val">$2.00</span>
+                  <button id="modal-bet-plus" class="s-round-btn">+</button>
+                </div>
+              </div>
+              <div class="settings-row">
+                <span>QUICK / TURBO SPIN</span>
+                <input type="checkbox" id="toggle-turbo" class="s-toggle" />
+              </div>
+              <div class="settings-row">
+                <span>SOUND EFFECTS &amp; MUSIC</span>
+                <input type="checkbox" id="toggle-audio" class="s-toggle" checked />
+              </div>
+              <div class="settings-row">
+                <span>AUTOPLAY SPINS</span>
+                <div class="auto-preset-group">
+                  <button class="auto-preset-btn" data-spins="10">10</button>
+                  <button class="auto-preset-btn" data-spins="25">25</button>
+                  <button class="auto-preset-btn" data-spins="50">50</button>
+                  <button class="auto-preset-btn" data-spins="100">100</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== 9. EXTRACTED ASSET GALLERY MODAL (115 ATLASES / 1,806 SPRITES) ==================== -->
+        <div id="assets-modal" class="modal-overlay hidden">
+          <div class="assets-explorer-window">
+            <div class="assets-header">
+              <div>
+                <div class="assets-title">EXTRACTED ASSET EXPLORER — MAHJONG WINS 3: BLACK SCATTER</div>
+                <div id="assets-summary-text" class="assets-subtitle">115 Texture Atlases • 1,806 Cropped Sprites • 24 Fonts • 35 Spine Skeletons</div>
+              </div>
+              <div class="assets-controls">
+                <input type="text" id="asset-search-input" placeholder="Search sprite or atlas (e.g. S03, dragon, bigwin)..." />
+                <select id="asset-atlas-filter">
+                  <option value="ALL">All 115 Atlases</option>
+                </select>
+                <button id="assets-close-btn" class="settings-x-btn">&times;</button>
+              </div>
+            </div>
+            <div id="assets-grid" class="assets-grid"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="src/game.js"></script>
+</body>
+</html>

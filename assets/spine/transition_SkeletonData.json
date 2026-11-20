@@ -1,0 +1,64 @@
+{
+"skeleton": { "hash": "1fplr3iElb8zhsKlEt9/+qdIOTY", "spine": "3.7.91", "width": 2500, "height": 999, "images": "./images/", "audio": "" },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "transition_1", "bone": "root", "attachment": "transition_9" }
+],
+"skins": {
+	"default": {
+		"transition_1": {
+			"transition_3": { "width": 2500, "height": 999 },
+			"transition_5": { "width": 2500, "height": 999 },
+			"transition_9": { "width": 2500, "height": 999 },
+			"transition_11": { "width": 2500, "height": 999 },
+			"transition_13": { "width": 2500, "height": 999 },
+			"transition_15": { "width": 2500, "height": 999 },
+			"transition_17": { "width": 2500, "height": 999 },
+			"transition_19": { "width": 2500, "height": 999 },
+			"transition_21": { "width": 2500, "height": 999 },
+			"transition_23": { "width": 2500, "height": 999 },
+			"transition_25": { "width": 2500, "height": 999 },
+			"transition_27": { "width": 2500, "height": 999 },
+			"transition_31": { "width": 2500, "height": 999 },
+			"transition_35": { "width": 2500, "height": 999 },
+			"transition_39": { "width": 2500, "height": 999 },
+			"transition_41": { "width": 2500, "height": 999 },
+			"transition_43": { "width": 2500, "height": 999 },
+			"transition_45": { "width": 2500, "height": 999 }
+		}
+	}
+},
+"animations": {
+	"play": {
+		"slots": {
+			"transition_1": {
+				"attachment": [
+					{ "time": 0, "name": null },
+					{ "time": 0.0333, "name": "transition_3" },
+					{ "time": 0.1, "name": "transition_5" },
+					{ "time": 0.1667, "name": "transition_9" },
+					{ "time": 0.2333, "name": "transition_11" },
+					{ "time": 0.3, "name": "transition_13" },
+					{ "time": 0.3667, "name": "transition_15" },
+					{ "time": 0.4333, "name": "transition_17" },
+					{ "time": 0.5, "name": "transition_19" },
+					{ "time": 0.5667, "name": "transition_21" },
+					{ "time": 0.6333, "name": "transition_23" },
+					{ "time": 0.7, "name": "transition_25" },
+					{ "time": 0.7667, "name": "transition_27" },
+					{ "time": 0.8333, "name": "transition_31" },
+					{ "time": 0.9, "name": "transition_35" },
+					{ "time": 0.9667, "name": "transition_39" },
+					{ "time": 1.0333, "name": "transition_41" },
+					{ "time": 1.1, "name": "transition_43" },
+					{ "time": 1.1667, "name": "transition_45" },
+					{ "time": 1.2333, "name": null },
+					{ "time": 1.4, "name": null }
+				]
+			}
+		}
+	}
+}
+}
